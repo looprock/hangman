@@ -14,11 +14,14 @@ export class Game {
         this.app = app;
         this.hangman = new Hangman(app);
 
-        // Fetch a random word from the API
-        fetch('https://random-word-api.herokuapp.com/word')
-            .then(response => response.json())
-            .then((data: string[]) => {
-                this.word = data[0].toLowerCase();
+        // Fetch a random word from the local 3plus_letter_words.txt file
+        fetch('src/3plus_letter_words.txt')
+            .then(response => response.text())
+            .then((text: string) => {
+                // Split by newlines, filter out empty lines, and trim whitespace
+                const words = text.split(/\r?\n/).map(w => w.trim()).filter(w => w.length > 0);
+                // Pick a random word
+                this.word = words[Math.floor(Math.random() * words.length)].toLowerCase();
                 this.maskedWord = Array(this.word.length).fill('_');
                 this.setupGame();
             });
