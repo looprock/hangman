@@ -15,7 +15,7 @@ export class Game {
         this.hangman = new Hangman(app);
 
         // Fetch a random word from the local 3plus_letter_words.txt file
-        fetch('src/3plus_letter_words.txt')
+        fetch('/3plus_letter_words.txt')
             .then(response => response.text())
             .then((text: string) => {
                 // Split by newlines, filter out empty lines, and trim whitespace
